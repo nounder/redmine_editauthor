@@ -12,7 +12,7 @@ module RedmineEditauthor
         return if issue.new_record? || !User.current.allowed_to?(:edit_issue_author, project)
 
         content_tag(:p, id: 'editauthor') do
-          o = options_from_collection_for_select(issue.assignable_users.collect,
+          o = options_from_collection_for_select(possible_authors(issue.project).collect,
                                                  'id', 'name', issue.author_id)
 
           concat label_tag('issue[author_id]', l(:field_author))
@@ -28,6 +28,13 @@ module RedmineEditauthor
           d[:value] = find_name_by_reflection('author', d.value)
           d[:old_value] = find_name_by_reflection('author', d.old_value)
         end
+      end
+
+      private
+
+      def possible_authors(project)
+        project.users.where(status: User::STATUS_ACTIVE)
+          .select { |u| u.allowed_to?(:add_issues, project) }
       end
     end
   end
