@@ -12,11 +12,10 @@ module RedmineEditauthor
         return if issue.new_record? || !User.current.allowed_to?(:edit_issue_author, project)
 
         content_tag(:p, id: 'editauthor') do
-          pas = possible_authors(issue.project)
-          if !pas.include? issue.author 
-            pas.unshift issue.author
-          end
-          o = options_from_collection_for_select(pas.collect, 'id', 'name', issue.author_id)
+          authors = possible_authors(issue.project)
+          authors.unshift(issue.author) if !authors.include?(issue.author)
+          o = options_from_collection_for_select(authors.collect, 'id', 'name',
+                                                 issue.author_id)
 
           concat label_tag('issue[author_id]', l(:field_author))
           concat select_tag('issue[author_id]', o)
