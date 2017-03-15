@@ -25,13 +25,14 @@ module RedmineEditauthor
 
       def view_issues_bulk_edit_details_bottom(context = {})
         project = context[:project]
-        
-        return if !User.current.allowed_to?(:edit_issue_author, project)
-        
+
+        return if project && !User.current.allowed_to?(:edit_issue_author, project)
+
         content_tag(:p, id: 'editauthor') do
           authors = possible_authors(project)
-          
-          o = content_tag('option', l(:label_no_change_option), :value => '') + options_from_collection_for_select(authors.collect, 'id', 'name')
+
+          o = content_tag('option', l(:label_no_change_option), :value => '') \
+              + options_from_collection_for_select(authors.collect, 'id', 'name')
 
           concat label_tag('issue[author_id]', l(:field_author))
           concat select_tag('issue[author_id]', o)
