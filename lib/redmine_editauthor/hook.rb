@@ -9,7 +9,10 @@ module RedmineEditauthor
       def view_issues_form_details_bottom(context = {})
         issue, project = context[:issue], context[:project]
 
-        return if issue.new_record? || !User.current.allowed_to?(:edit_issue_author, project)
+        if issue.new_record? && !User.current.allowed_to?(:set_original_issue_author, project) \
+          or issue.persisted? && !User.current.allowed_to?(:edit_issue_author, project)
+          return
+        end
 
         content_tag(:p, id: 'editauthor') do
           authors = possible_authors(issue.project)
@@ -56,7 +59,7 @@ module RedmineEditauthor
       def author_select_field(options)
         label_tag('issue[author_id]', l(:field_author)) \
         + select_tag('issue[author_id]', options) \
-        + "<script>$('#editauthor').insertBefore($('#issue_project_id').parent());</script>".html_safe
+        + "<script>$('#editauthor').insertBefore($('#issue_tracker_id').parent());</script>".html_safe
       end
     end
   end
