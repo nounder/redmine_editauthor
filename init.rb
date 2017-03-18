@@ -4,7 +4,7 @@ Redmine::Plugin.register :redmine_editauthor do
   name "Redmine Edit Issue Author"
   author "Ralph Gutkowski"
   description "Edit author of issue."
-  version '0.9.4'
+  version '0.10.0'
   url 'https://github.com/rgtk/redmine_editauthor'
   author_url 'https://github.com/rgtk'
 
