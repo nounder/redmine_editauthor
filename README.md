@@ -1,7 +1,7 @@
 Redmine Edit Issue Author
 ===================
 
-Redmine plugin allowing editing issue author.
+Redmine plugin that allows to edit issue author.
 
 
 Installation
@@ -28,3 +28,4 @@ Since this program depend on another software, it was written with compatibility
 in mind to keep it functional across many version of software it uses.
 
   * Redmine (2.0+)
+  * Redmine (3.0+)
