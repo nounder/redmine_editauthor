@@ -52,7 +52,7 @@ module RedmineEditauthor
       private
 
       def possible_authors(project)
-        User.active.eager_load(:members).where("#{Member.table_name}.project_id = ? OR #{User.table_name}.admin = 1", project.id).distinct.to_a
+        User.active.eager_load(:members).where("#{Member.table_name}.project_id = ? OR #{User.table_name}.admin = ?", project.id, true).distinct.to_a
           .select { |u| u.allowed_to?(:add_issues, project) }
       end
 
