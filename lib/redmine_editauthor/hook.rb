@@ -7,7 +7,7 @@ module RedmineEditauthor
       attr_accessor :output_buffer
 
       def view_issues_form_details_bottom(context = {})
-        issue, project = context[:issue], context[:project]
+        issue, project = context.values_at(:issue, :project)
 
         if issue.new_record? && !User.current.allowed_to?(:set_original_issue_author, project) \
           or issue.persisted? && !User.current.allowed_to?(:edit_issue_author, project)
@@ -52,14 +52,17 @@ module RedmineEditauthor
       private
 
       def possible_authors(project)
-        User.active.eager_load(:members).where("#{Member.table_name}.project_id = ? OR #{User.table_name}.admin = ?", project.id, true).distinct.to_a
-          .select { |u| u.allowed_to?(:add_issues, project) }
+        User.active.eager_load(:members).where(
+          "#{Member.table_name}.project_id = ? OR #{User.table_name}.admin = ?",
+          project.id, true
+        ).select { |u| u.allowed_to?(:add_issues, project) }
       end
 
       def author_select_field(options)
         label_tag('issue[author_id]', l(:field_author)) \
         + select_tag('issue[author_id]', options) \
-        + "<script>$('#editauthor').insertBefore($('#issue_tracker_id').parent());</script>".html_safe
+        + "<script>$('#editauthor').insertBefore($('#issue_tracker_id').parent());</script>"
+            .html_safe
       end
     end
   end
