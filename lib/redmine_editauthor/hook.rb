@@ -14,9 +14,12 @@ module RedmineEditauthor
           return
         end
 
+        author = issue.author
+
         content_tag(:p, id: 'editauthor') do
           authors = possible_authors(issue.project)
-          authors.unshift(issue.author) unless authors.include?(issue.author)
+
+          authors.unshift(author) if author && !authors.include?(author)
 
           o = options_from_collection_for_select(authors, 'id', 'name',
                                                  issue.author_id)
