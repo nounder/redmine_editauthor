@@ -17,7 +17,7 @@ module RedmineEditauthor
         author = issue.author
 
         content_tag(:p, id: 'editauthor') do
-          authors = possible_authors(issue.project)
+          authors = project.possible_authors
 
           authors.unshift(author) if author && !authors.include?(author)
 
@@ -34,7 +34,7 @@ module RedmineEditauthor
         return if project && !User.current.allowed_to?(:edit_issue_author, project)
 
         content_tag(:p, id: 'editauthor') do
-          authors = possible_authors(project)
+          authors = project.possible_authors
 
           o = content_tag('option', l(:label_no_change_option), :value => '') \
               + options_from_collection_for_select(authors, 'id', 'name')
@@ -53,13 +53,6 @@ module RedmineEditauthor
       end
 
       private
-
-      def possible_authors(project)
-        User.active.eager_load(:members).where(
-          "#{Member.table_name}.project_id = ? OR #{User.table_name}.admin = ?",
-          project.id, true
-        ).select { |u| u.allowed_to?(:add_issues, project) }
-      end
 
       def author_select_field(options)
         label_tag('issue[author_id]', l(:field_author)) \
