@@ -31,7 +31,7 @@ module RedmineEditauthor
       def view_issues_bulk_edit_details_bottom(context = {})
         project = context[:project]
 
-        return if project && !User.current.allowed_to?(:edit_issue_author, project)
+        return if !project || !User.current.allowed_to?(:edit_issue_author, project)
 
         content_tag(:p, id: 'editauthor') do
           authors = possible_authors(project)
