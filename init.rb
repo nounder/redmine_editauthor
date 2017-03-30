@@ -11,6 +11,7 @@ Redmine::Plugin.register :redmine_editauthor do
   project_module :issue_tracking do
     permission :edit_issue_author, {}
     permission :set_original_issue_author, {}
+    permission :can_be_set_as_issue_author, {}
   end
 end
 
