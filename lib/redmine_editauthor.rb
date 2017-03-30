@@ -1,6 +1,7 @@
 module RedmineEditauthor
   PATCHES = [
-    'Issue'
+    'Issue',
+    'Project'
   ]
 
   def self.patch
