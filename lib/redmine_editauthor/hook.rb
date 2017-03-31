@@ -55,10 +55,16 @@ module RedmineEditauthor
       private
 
       def possible_authors(project)
-        User.active.eager_load(:members).where(
-          "#{Member.table_name}.project_id = ? OR #{User.table_name}.admin = ?",
-          project.id, true
-        ).select { |u| u.allowed_to?(:add_issues, project) }
+        role_ids = Role.joins(:members)
+                     .where(members: { project_id: project.id })
+                     .distinct(:id)
+                     .pluck(:id, :permissions)
+                     .select { |_, perms| perms.include?(:add_issues) }
+                     .map(&:first)
+
+        User.active.joins(members: :roles).distinct(:id)
+          .where("#{MemberRole.table_name}.role_id IN (?) OR #{User.table_name}.admin = ?",
+                 role_ids, true)
       end
 
       def author_select_field(options)
