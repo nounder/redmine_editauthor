@@ -5,6 +5,26 @@ module RedmineEditauthor
 
       # necessary for using content_tag in Listener
       attr_accessor :output_buffer
+			def view_issues_bulk_edit_details_bottom(context = {})
+      	project = context[:project]	
+
+      	if !User.current.allowed_to?(:set_original_issue_author, project) \
+          or !User.current.allowed_to?(:edit_issue_author, project)
+          return
+        end
+
+        content_tag(:p, id: 'editauthor') do
+          authors = possible_authors(issue.project)
+
+          authors.unshift(author) if author && !authors.include?(author)
+
+          o = options_from_collection_for_select(authors, 'id', 'name',
+                                                 issue.author_id)
+
+          author_select_field(o)
+        end
+      end
+
 
       def view_issues_form_details_bottom(context = {})
         issue, project = context.values_at(:issue, :project)
