@@ -1,0 +1,10 @@
+<% settings = RedmineEditauthor::Settings %>
+
+<fieldset>
+  <p id="author_scope">
+    <label><%= l(:label_editauthor_members_scope) %></label>
+    <%= hidden_field_tag('settings[members_scope]', '0') %>
+    <%= check_box_tag('settings[members_scope]', '1', settings.members_scope?) %>
+    <em class="info"><%= l(:text_editauthor_members_scope) %></em>
+  </p>
+</fieldset>
