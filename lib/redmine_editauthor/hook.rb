@@ -7,16 +7,19 @@ module RedmineEditauthor
       attr_accessor :output_buffer
 
       def view_issues_form_details_bottom(context = {})
-        issue, project = context[:issue], context[:project]
+        issue, project = context.values_at(:issue, :project)
 
         if issue.new_record? && !User.current.allowed_to?(:set_original_issue_author, project) \
           or issue.persisted? && !User.current.allowed_to?(:edit_issue_author, project)
           return
         end
 
+        author = issue.author
+
         content_tag(:p, id: 'editauthor') do
           authors = possible_authors(issue.project)
-          authors.unshift(issue.author) unless authors.include?(issue.author)
+
+          authors.unshift(author) if author && !authors.include?(author)
 
           o = options_from_collection_for_select(authors, 'id', 'name',
                                                  issue.author_id)
@@ -28,7 +31,7 @@ module RedmineEditauthor
       def view_issues_bulk_edit_details_bottom(context = {})
         project = context[:project]
 
-        return if project && !User.current.allowed_to?(:edit_issue_author, project)
+        return if !project || !User.current.allowed_to?(:edit_issue_author, project)
 
         content_tag(:p, id: 'editauthor') do
           authors = possible_authors(project)
@@ -52,14 +55,27 @@ module RedmineEditauthor
       private
 
       def possible_authors(project)
-        project.users.where(status: User::STATUS_ACTIVE).to_a
-          .select { |u| u.allowed_to?(:add_issues, project) }
+        if Settings.members_scope?
+          project.users
+        else
+          role_ids = Role.joins(:members)
+                       .where(members: { project_id: project.id })
+                       .distinct(:id)
+                       .pluck(:id, :permissions)
+                       .select { |_, perms| perms.include?(:add_issues) }
+                       .map(&:first)
+
+          User.active.joins(members: :roles).distinct(:id)
+            .where("#{MemberRole.table_name}.role_id IN (?) OR #{User.table_name}.admin = ?",
+                   role_ids, true)
+        end
       end
 
       def author_select_field(options)
         label_tag('issue[author_id]', l(:field_author)) \
         + select_tag('issue[author_id]', options) \
-        + "<script>$('#editauthor').insertBefore($('#issue_tracker_id').parent());</script>".html_safe
+        + "<script>$('#editauthor').insertBefore($('#issue_tracker_id').parent());</script>"
+            .html_safe
       end
     end
   end
