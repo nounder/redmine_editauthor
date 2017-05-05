@@ -8,6 +8,10 @@ Redmine::Plugin.register :redmine_editauthor do
   url 'https://github.com/rgtk/redmine_editauthor'
   author_url 'https://github.com/rgtk'
 
+  settings default: {
+    'members_scope' => false
+  }, partial: 'settings/redmine_editauthor'
+
   project_module :issue_tracking do
     permission :edit_issue_author, {}
     permission :set_original_issue_author, {}

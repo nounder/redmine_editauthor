@@ -1,3 +1,5 @@
 en:
-  permission_edit_issue_author: "Edit author"
-  permission_set_original_issue_author: "Set original author"
+  label_editauthor_members_scope: Narrow authors to members
+  text_editauthor_members_scope: Only project members can be set as author. Other users with global access such as administrators won't be listed.
+  permission_edit_issue_author: Edit author
+  permission_set_original_issue_author: Set original author
