@@ -1,3 +1,5 @@
 zh:
+  label_editauthor_members_scope: "限制可选作者范围至项目内成员"
+  text_editauthor_members_scope: "作者仅限本项目成员。其他具备全局访问权限的其他他用户如管理员将不会被包含在列表中。"
   permission_edit_issue_author: "编辑作者"
   permission_set_original_issue_author: "设置原作者"
