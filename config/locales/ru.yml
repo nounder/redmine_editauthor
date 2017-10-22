@@ -1,0 +1,5 @@
+ru:
+  label_editauthor_members_scope: Ограничить список авторов только для участников
+  text_editauthor_members_scope: В качестве автора могут быть заданы только участники проекта. Другие пользователи с глобальным доступом, такие как администраторы, не будут указаны.
+  permission_edit_issue_author: Изменить автора
+  permission_set_original_issue_author: Вставить оригинального автора
