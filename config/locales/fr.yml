@@ -1,0 +1,5 @@
+fr:
+  label_editauthor_members_scope: Restreindre les utilisateurs aux membres
+  text_editauthor_members_scope: Seuls les membres du projet peuvent être désignés comme auteur. Les autres utilisateurs avec un accès global tels que les adminsitrateurs ne seront pas listés.
+  permission_edit_issue_author: Modifier l'auteur
+  permission_set_original_issue_author: Désigner l'auteur original
