@@ -1,0 +1,5 @@
+ca:
+  label_editauthor_members_scope: Limitar els autors als membres del projecte
+  text_editauthor_members_scope: Només els membres del projecte poden seleccionar-se com autors. Altres usuaris amb accés global com els administradors no sortiran a la llista.
+  permission_edit_issue_author: Editar autor
+  permission_set_original_issue_author: Posar l'autor original
