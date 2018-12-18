@@ -17,7 +17,7 @@ module RedmineEditauthor
         author = issue.author
 
         content_tag(:p, id: 'editauthor') do
-          authors = possible_authors(issue.project)
+          authors = possible_authors(issue.project).to_a
 
           authors.unshift(author) if author && !authors.include?(author)
 
