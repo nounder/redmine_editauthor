@@ -36,3 +36,4 @@ This plugin has been written with compatibility in mind to keep it
 functional across many different versions of Redmine:
 
   * Redmine (3.0+)
+  * Redmine (4.0+)
