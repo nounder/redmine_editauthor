@@ -1,5 +1,7 @@
 de:
   label_editauthor_members_scope: "Beschränken der Autoren auf Projektmitglieder"
   text_editauthor_members_scope: "Nur Projektmitglieder können als Autor verwendet werden. Andere Mitglieder mit globalem Zugriff (wie Administratoren) werden nicht aufgeführt."
+  label_editauthor_creation_journal: Journaleintrag bei Ticketerstellung
+  text_editauthor_creation_journal: Erstellung eines Journaleintrags bei Ticketerstellung sofern der Ersteller nicht der ausgewählte Autor ist.
   permission_edit_issue_author: "Autor bearbeiten"
   permission_set_original_issue_author: "Autor bei Ticketerstellung auswählen"

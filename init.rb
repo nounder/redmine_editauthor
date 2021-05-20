@@ -9,7 +9,8 @@ Redmine::Plugin.register :redmine_editauthor do
   author_url 'https://github.com/rgtk'
 
   settings default: {
-    'members_scope' => false
+    'members_scope' => false,
+    'creation_journal' => false
   }, partial: 'settings/redmine_editauthor'
 
   project_module :issue_tracking do

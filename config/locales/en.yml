@@ -1,5 +1,7 @@
 en:
   label_editauthor_members_scope: Narrow authors to members
   text_editauthor_members_scope: Only project members can be set as author. Other users with global access such as administrators won't be listed.
+  label_editauthor_creation_journal: Journal entry on issue creation
+  text_editauthor_creation_journal: Create a journal entry upon issue creation if creator is not equal to selected issue author.
   permission_edit_issue_author: Edit author
   permission_set_original_issue_author: Set original author
