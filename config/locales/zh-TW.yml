@@ -1,0 +1,6 @@
+zh-TW:
+  label_editauthor_members_scope: "可選擇之作者僅限專案成員"
+  text_editauthor_members_scope: "作者僅限於專案成員，其他具有全域權限的使用者將不會列於清單。"
+  permission_edit_issue_author: "編輯作者"
+  permission_set_original_issue_author: "設定作者"
+  
