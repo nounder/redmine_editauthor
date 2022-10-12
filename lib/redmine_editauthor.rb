@@ -47,7 +47,7 @@ module RedmineEditauthor
 
   def self.patch
     PATCHES.each do |name|
-      require "#{self.name.underscore}/patches/#{name.underscore}_patch"
+      require File.expand_path("#{self.name.underscore}/patches/#{name.underscore}_patch", __dir__)
 
       target = name.constantize
       patch = "#{self.name}::Patches::#{name}Patch".constantize
@@ -59,7 +59,7 @@ module RedmineEditauthor
   end
 
   def self.hook
-    require_dependency "#{self.name.underscore}/hook"
+    require File.expand_path("#{self.name.underscore}/hook", __dir__)
   end
 
   def self.install

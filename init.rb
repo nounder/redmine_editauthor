@@ -1,4 +1,4 @@
-require 'redmine_editauthor'
+require File.expand_path('lib/redmine_editauthor', __dir__)
 
 Redmine::Plugin.register :redmine_editauthor do
   name "Redmine Edit Issue Author"
