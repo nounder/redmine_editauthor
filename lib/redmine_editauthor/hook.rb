@@ -56,26 +56,17 @@ module RedmineEditauthor
 
       def possible_authors(project)
         if Settings.members_scope?
-          project.users.sorted
+          project.users.active.sorted
         else
-          role_ids = Role.joins(:members)
-                       .where(members: { project_id: project.id })
-                       .distinct(:id)
-                       .pluck(:id, :permissions)
-                       .select { |_, perms| perms.include?(:add_issues) }
-                       .map(&:first)
-
-          User.active.sorted.joins(members: :roles).distinct(:id)
-            .where("#{MemberRole.table_name}.role_id IN (?) OR #{User.table_name}.admin = ?",
-                   role_ids, true)
+          User.active.sorted
         end
       end
 
       def author_select_field(options)
         label_tag('issue[author_id]', l(:field_author)) \
-        + select_tag('issue[author_id]', options) \
-        + "<script>$('#editauthor').insertBefore($('#issue_tracker_id').parent());</script>"
-            .html_safe
+          + select_tag('issue[author_id]', options) \
+          + "<script>$('#editauthor').insertBefore($('#issue_tracker_id').parent());</script>"
+          .html_safe
       end
     end
   end
