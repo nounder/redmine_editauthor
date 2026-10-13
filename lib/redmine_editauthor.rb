@@ -47,7 +47,11 @@ module RedmineEditauthor
 
   def self.patch
     PATCHES.each do |name|
-      require File.expand_path("#{self.name.underscore}/patches/#{name.underscore}_patch", __dir__)
+      require File.expand_path(
+        "#{self.name.underscore}/patches/#{name.underscore}_patch",
+        __dir__
+      )
+
 
       target = name.constantize
       patch = "#{self.name}::Patches::#{name}Patch".constantize
