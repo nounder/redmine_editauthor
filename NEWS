@@ -1,3 +1,11 @@
+0.12.0 (2026-10-23)
+
+ - Validate selected author against the list of possible authors.
+ - List only members of the current project (and administrators) as
+   possible authors, instead of members of any project.
+ - List administrators even if they are not members of any project.
+ - Update tests for current Rails versions.
+
 0.11.0 (2017-05-05)
 
  - Add setting to narrow possible authors to porject members (#22).
