@@ -1,7 +1,7 @@
 module RedmineEditauthor
-  PLUGIN_ID = :redmine_editauthor
+  PLUGIN_ID ||= :redmine_editauthor
 
-  PATCHES = [
+  PATCHES ||= [
     'Issue'
   ]
 
@@ -55,6 +55,29 @@ module RedmineEditauthor
       unless target.included_modules.include?(patch)
         target.send(:include, patch)
       end
+    end
+  end
+
+  # Users that can be set as author of issues in the given project.
+  # With members scope: active members of the project. Otherwise: active
+  # members with a role that can add issues, plus active administrators.
+  def self.possible_authors(project)
+    if Settings.members_scope?
+      project.users.sorted
+    else
+      member_roles = MemberRole.joins(:member)
+                       .where(members: { project_id: project.id })
+
+      role_ids = Role.where(id: member_roles.select(:role_id))
+                   .select { |role| role.has_permission?(:add_issues) }
+                   .map(&:id)
+
+      member_ids = member_roles.where(role_id: role_ids)
+                     .select("#{Member.table_name}.user_id")
+
+      User.active.where(id: member_ids)
+        .or(User.active.where(admin: true))
+        .sorted
     end
   end
 

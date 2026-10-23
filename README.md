@@ -25,9 +25,13 @@ form.
 
 #### Possible authors
  
- By default users with global permissions such as administrators will be
- listed even if they are not participants of the project. It is possible to
- narrow possible authors to project members in plugin settings.
+ By default project members with a role allowed to add issues are listed,
+ together with administrators even if they are not participants of the
+ project. It is possible to narrow possible authors to project members in
+ plugin settings.
+
+ The selected author is validated on save: only users listed as possible
+ authors are accepted.
 
 
 ## Requirements
@@ -35,4 +39,4 @@ form.
 This plugin has been written with compatibility in mind to keep it
 functional across many different versions of Redmine:
 
-  * Redmine (`>= 3.0`)
+  * Redmine (`>= 5.0`)
